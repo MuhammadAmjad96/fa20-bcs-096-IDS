@@ -1,0 +1,24 @@
+import folium
+import pandas as pd
+
+# Load the data
+df = pd.read_csv('./sample_data/pak-heritage-sites.csv', header=None)
+df.columns = ['Latitude', 'Longitude', 'Site']
+
+# Initialize a folium map centered around the geographic center of Pakistan
+pakistan_map = folium.Map(location=[30.3753, 69.3451], zoom_start=6)
+
+# Add CircleMarkers for each heritage site
+for index, row in df.iterrows():
+    folium.CircleMarker(
+        location=[row['Latitude'], row['Longitude']],  # Coordinates
+        radius=5,  # Marker radius
+        color='blue',  # Marker color
+        fill=True,
+        fill_color='blue',
+        fill_opacity=0.6,
+        popup=row['Site'],  # Popup text
+    ).add_to(pakistan_map)
+
+# Display the map
+pakistan_map
